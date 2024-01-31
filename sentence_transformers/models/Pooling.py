@@ -119,7 +119,7 @@ class Pooling(nn.Module):
 
     def forward(self, features: Dict[str, Tensor]):
         token_embeddings = features["token_embeddings"]
-        attention_mask = features["attention_mask"]
+        attention_mask = features.get("attention_mask", features.get("word_input_mask"))
         if not self.include_prompt and "prompt_length" in features:
             attention_mask[:, : features["prompt_length"]] = 0
 
